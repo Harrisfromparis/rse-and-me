@@ -124,6 +124,10 @@ select,input[type=text],textarea{font:inherit;padding:9px 10px;border:1px solid 
 .story{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
 .page{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:8px;justify-items:center;text-align:center}
 .page svg{width:70px;height:70px;fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+/* hand-drawn pictures: same footprint as the icons, a little larger so the detail reads */
+img.draw{display:block;width:64px;height:64px;object-fit:contain}
+.yn .pic img.draw{width:140px;height:140px}.picker .pic img.draw{width:46px;height:46px}
+body.learner .pic img.draw{width:86px;height:86px}.page img.draw{width:80px;height:80px}
 .page .pn{font-size:.75rem;color:var(--muted);justify-self:start}
 .page .acts{display:flex;gap:6px}
 .mini{font-size:.8rem;padding:4px 9px;border-radius:8px;border:1px solid var(--line);background:var(--bg);cursor:pointer}
@@ -384,7 +388,9 @@ const IC={
  yes:'<circle cx="32" cy="32" r="24"/><path d="M21 33l8 8 15-17"/>',
  no:'<circle cx="32" cy="32" r="24"/><path d="M23 23l18 18M41 23L23 41"/>'
 };
-const svg=k=>`<svg viewBox="0 0 64 64" aria-hidden="true">${IC[k]||IC.me}</svg>`;
+/* hand-drawn pictures by Autism & Me (drawings/). alt is empty because the label sits under the picture */
+const DRAW={stripycat:"stripy-cat",cow:"cow",kitten:"orange-kitten",unicorncat:"unicorn-cat",girl:"girl-with-bunches"};
+const svg=k=>DRAW[k]?`<img class="draw" src="drawings/${DRAW[k]}.webp" alt="" width="64" height="64" decoding="async">`:`<svg viewBox="0 0 64 64" aria-hidden="true">${IC[k]||IC.me}</svg>`;
 const SPK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>';
 
 /* card library: id: [label, icon, easy label] */
@@ -406,7 +412,8 @@ const CARD={
  u4:["Tell a safe adult","talk"],u5:["Keep telling until someone helps","repeat"],
  me:["Me","me"],family:["Family","family"],friend:["Close friend","friend"],classmate:["Classmate","classmate"],
  teacher:["Teacher","teacher"],doctor:["Doctor","doctor"],helper:["Garda","helper"],worker:["Shop worker","worker"],
- stranger:["Stranger","stranger"],happy:["Happy","happy"],calm:["Calm","calm"],worried:["Worried","worried"]
+ stranger:["Stranger","stranger"],happy:["Happy","happy"],calm:["Calm","calm"],worried:["Worried","worried"],
+ d1:["Stripy cat","stripycat"],d2:["Cow","cow"],d3:["Orange kitten","kitten"],d4:["Unicorn cat","unicorncat"],d5:["Girl with bunches","girl"]
 };
 const SETS={
  places:{name:"Places: public or private?",modes:["sort"],bins:["Public","Private"],cards:{classroom:0,shop:0,bus:0,park:0,bedroom:1,bathroom:1,cubicle:1},
@@ -420,6 +427,7 @@ const SETS={
  seqPE:{name:"Getting changed for PE",modes:["seq"],order:["p1","p2","p3","p4","p5","p6"]},
  seqShower:{name:"My shower routine",modes:["seq"],order:["s1","s2","s3","s4","s5","s6"]},
  seqUnsafe:{name:"If I feel unsafe",modes:["seq"],order:["u1","u2","u3","u4","u5"]},
+ hugAsk:{name:"Our drawings: ask before a hug?",modes:["yesno"],q:"Should I ask before I give a hug?",cards:{d1:1,d2:1,d3:1,d4:1,d5:1}},
  storyAll:{name:"All pictures",modes:["story"]}
 };
 const AUDIO={on:true};
